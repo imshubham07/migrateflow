@@ -19,6 +19,15 @@ const port = Number(process.env.PORT ?? 4000);
 
 app.use(cors({ origin: process.env.CORS_ORIGIN ?? "http://localhost:3000" }));
 app.use(express.json());
+
+// Vercel exposes this service under /api, while local development keeps the
+// existing root-level API routes. Normalize both forms before routing.
+app.use((request, _response, next) => {
+  if (request.url === "/api") request.url = "/";
+  else if (request.url.startsWith("/api/")) request.url = request.url.slice(4);
+  next();
+});
+
 app.use(healthRouter);
 app.use(analysisRouter);
 app.use(approvalRouter);
