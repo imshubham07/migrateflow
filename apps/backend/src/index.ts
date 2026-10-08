@@ -17,7 +17,8 @@ import { migrationsRouter } from "./routes/migrations.js";
 const app = express();
 const port = Number(process.env.PORT ?? 4000);
 
-app.use(cors({ origin: process.env.CORS_ORIGIN ?? "http://localhost:3000" }));
+// Public demo API: allow browser requests from any origin. Credentials remain disabled.
+app.use(cors({ origin: true }));
 app.use(express.json());
 
 // Vercel exposes this service under /api, while local development keeps the
