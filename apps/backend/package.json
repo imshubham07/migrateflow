@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "build": "tsc",
+    "build": "prisma generate --schema ../../prisma/schema.prisma && tsc",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src --ext .ts"
   },
@@ -20,6 +20,7 @@
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "eslint": "^9.17.0",
+    "prisma": "^6.1.0",
     "tsx": "^4.19.2",
     "typescript-eslint": "^8.18.0"
   }
