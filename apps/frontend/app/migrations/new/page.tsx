@@ -9,7 +9,7 @@ const MAX_BYTES = 2 * 1024 * 1024;
 
 export default function NewMigrationPage() {
   const router = useRouter();
-  const api = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
+  const api = process.env.NEXT_PUBLIC_API_URL ?? "https://backend-eight-sable-88.vercel.app";
   const [sourceSchema, setSourceSchema] = useState<FileState>({ file: null });
   const [targetSchema, setTargetSchema] = useState<FileState>({ file: null });
   const [sourceRecords, setSourceRecords] = useState<FileState>({ file: null });

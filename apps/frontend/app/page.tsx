@@ -8,7 +8,7 @@ type Migration = { id: string; name: string; sourceName: string; targetName: str
 export default function HomePage() {
   const [migrations, setMigrations] = useState<Migration[]>([]);
   const [error, setError] = useState("");
-  const api = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
+  const api = process.env.NEXT_PUBLIC_API_URL ?? "https://backend-eight-sable-88.vercel.app";
 
   useEffect(() => {
     void fetch(`${api}/migrations`)

@@ -19,7 +19,7 @@ const statusHelp: Record<string, string> = {
 
 export default function MigrationWorkspace({ params }: { params: Promise<{ migrationId: string }> }) {
   const { migrationId } = React.use(params);
-  const api = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
+  const api = process.env.NEXT_PUBLIC_API_URL ?? "https://backend-eight-sable-88.vercel.app";
   const [workspace, setWorkspace] = useState<Workspace | null>(null);
   const [reconciliation, setReconciliation] = useState<Reconciliation | null>(null);
   const [rollback, setRollback] = useState<Rollback | null>(null);
