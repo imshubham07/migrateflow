@@ -1,0 +1,29 @@
+{
+  "name": "migrateflow",
+  "private": true,
+  "workspaces": ["apps/*", "packages/*"],
+  "scripts": {
+    "dev": "concurrently \"npm run dev -w @migrateflow/backend\" \"npm run dev -w @migrateflow/frontend\"",
+    "build": "npm run build -ws",
+    "typecheck": "npm run typecheck -ws",
+    "lint": "npm run lint -w @migrateflow/backend && npm run lint -w @migrateflow/frontend",
+    "test": "node --import tsx --test tests/*.test.ts",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "db:studio": "prisma studio",
+    "db:seed": "prisma db seed",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "concurrently": "^9.1.2",
+    "prisma": "^6.1.0",
+    "@prisma/client": "^6.1.0",
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.2",
+    "tsx": "^4.19.2"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  }
+}

@@ -1,0 +1,12 @@
+node_modules/
+.env
+.env.local
+.env.*.local
+.next/
+dist/
+coverage/
+*.log
+*.tsbuildinfo
+.DS_Store
+docs/DEPLOYMENT.md
+docs/DEPLOYMENT.md

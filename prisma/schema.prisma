@@ -1,0 +1,245 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum MigrationStatus {
+  SETUP
+  ANALYZING
+  PLAN_DRAFT
+  PENDING_APPROVAL
+  APPROVED
+  DRY_RUN
+  READY_TO_EXECUTE
+  EXECUTING
+  COMPLETED
+  FAILED
+  ROLLED_BACK
+}
+enum SchemaType {
+  SOURCE
+  TARGET
+}
+enum PlanStatus {
+  DRAFT
+  PENDING_APPROVAL
+  APPROVED
+  REJECTED
+  SUPERSEDED
+}
+enum ExecutionType {
+  DRY_RUN
+  MIGRATION
+}
+enum ExecutionStatus {
+  PENDING
+  RUNNING
+  COMPLETED
+  FAILED
+  ROLLED_BACK
+}
+enum RecordStatus {
+  MIGRATED
+  ROLLED_BACK
+}
+enum ReconciliationStatus {
+  MATCHED
+  MISMATCHED
+  FAILED
+}
+enum RollbackStatus {
+  COMPLETED
+  FAILED
+}
+
+model Migration {
+  id String @id @default(uuid())
+  name String
+  sourceName String
+  targetName String
+  sampleLimit Int
+  sourceRecords Json?
+  sourceFormat String?
+  status MigrationStatus @default(SETUP)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  schemas MigrationSchema[]
+  plans MigrationPlan[]
+  executions MigrationExecution[]
+  records MigrationRecord[]
+  auditEvents AuditEvent[]
+  reconciliations Reconciliation[]
+  rollbacks Rollback[]
+  @@index([status])
+  @@index([createdAt])
+}
+
+model Customer {
+  id Int @id
+  name String
+  email String
+  phone String?
+  status String
+  createdAt DateTime
+}
+
+model Reconciliation {
+  id String @id @default(uuid())
+  migrationId String
+  executionId String @unique
+  status ReconciliationStatus
+  sourceCount Int
+  targetCount Int
+  matchedCount Int
+  missingCount Int
+  extraCount Int
+  mismatchCount Int
+  details Json
+  createdAt DateTime @default(now())
+  migration Migration @relation(fields: [migrationId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  execution MigrationExecution @relation(fields: [executionId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  @@index([migrationId])
+  @@index([status])
+}
+
+model Rollback {
+  id String @id @default(uuid())
+  migrationId String
+  executionId String @unique
+  status RollbackStatus
+  targetRecordsFound Int
+  targetRecordsDeleted Int
+  alreadyMissing Int
+  failed Int
+  details Json
+  createdAt DateTime @default(now())
+  migration Migration @relation(fields: [migrationId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  execution MigrationExecution @relation(fields: [executionId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  @@index([migrationId])
+  @@index([status])
+}
+
+model MigrationSchema {
+  id String @id @default(uuid())
+  migrationId String
+  type SchemaType
+  version Int
+  definition Json
+  createdAt DateTime @default(now())
+  migration Migration @relation(fields: [migrationId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  @@unique([migrationId, type, version])
+  @@index([migrationId])
+}
+
+model MigrationPlan {
+  id String @id @default(uuid())
+  migrationId String
+  version Int
+  status PlanStatus @default(DRAFT)
+  mapping Json
+  transformations Json
+  risks Json
+  questions Json
+  validation Json
+  planSummary String
+  createdAt DateTime @default(now())
+  approvedAt DateTime?
+  migration Migration @relation(fields: [migrationId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  executions MigrationExecution[]
+  @@unique([migrationId, version])
+  @@index([migrationId])
+  @@index([status])
+}
+
+model MigrationExecution {
+  id String @id @default(uuid())
+  migrationId String
+  planId String
+  type ExecutionType
+  status ExecutionStatus @default(PENDING)
+  sourceCount Int @default(0)
+  transformedCount Int @default(0)
+  acceptedCount Int @default(0)
+  rejectedCount Int @default(0)
+  migratedCount Int @default(0)
+  startedAt DateTime?
+  completedAt DateTime?
+  createdAt DateTime @default(now())
+  migration Migration @relation(fields: [migrationId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  plan MigrationPlan @relation(fields: [planId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  records MigrationRecord[]
+  quarantine QuarantineRecord[]
+  auditEvents AuditEvent[]
+  dryRunRecords DryRunRecord[]
+  reconciliation Reconciliation?
+  rollback Rollback?
+  @@index([migrationId])
+  @@index([planId])
+  @@index([status])
+  @@index([createdAt])
+}
+
+enum DryRunRecordStatus {
+  ACCEPTED
+  REJECTED
+}
+
+model DryRunRecord {
+  id String @id @default(uuid())
+  executionId String
+  sourceRecordId String
+  transformedData Json
+  status DryRunRecordStatus
+  createdAt DateTime @default(now())
+  execution MigrationExecution @relation(fields: [executionId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  @@unique([executionId, sourceRecordId])
+  @@index([executionId])
+  @@index([status])
+}
+
+model MigrationRecord {
+  id String @id @default(uuid())
+  migrationId String
+  executionId String
+  sourceRecordId String
+  targetRecordId String
+  targetData Json?
+  status RecordStatus
+  createdAt DateTime @default(now())
+  migration Migration @relation(fields: [migrationId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  execution MigrationExecution @relation(fields: [executionId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  @@unique([migrationId, sourceRecordId])
+  @@index([executionId])
+  @@index([status])
+}
+
+model QuarantineRecord {
+  id String @id @default(uuid())
+  executionId String
+  sourceRecordId String
+  sourceData Json
+  errors Json
+  createdAt DateTime @default(now())
+  execution MigrationExecution @relation(fields: [executionId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  @@index([executionId])
+  @@index([createdAt])
+}
+
+model AuditEvent {
+  id String @id @default(uuid())
+  migrationId String
+  executionId String?
+  eventType String
+  metadata Json
+  createdAt DateTime @default(now())
+  migration Migration @relation(fields: [migrationId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  execution MigrationExecution? @relation(fields: [executionId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  @@index([migrationId])
+  @@index([executionId])
+  @@index([eventType])
+  @@index([createdAt])
+}

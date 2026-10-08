@@ -1,0 +1,22 @@
+[
+  {"customer_id":1,"full_name":"Aarav Sharma","email_address":"aarav@example.com","phone_number":"+91-9876500001","status":"active","created_at":"2025-01-02T10:00:00Z"},
+  {"customer_id":2,"full_name":"Diya Patel","email_address":"diya@example.com","phone_number":null,"status":"active","created_at":"2025-01-03T10:00:00Z"},
+  {"customer_id":3,"full_name":"Kabir Singh","email_address":"kabir@example.com","phone_number":"+91-9876500003","status":"inactive","created_at":"2025-01-04T10:00:00Z"},
+  {"customer_id":4,"full_name":"Anaya Mehta","email_address":"anaya@example.com","phone_number":"+91-9876500004","status":"active","created_at":"2025-01-05T10:00:00Z"},
+  {"customer_id":5,"full_name":"Vivaan Rao","email_address":"vivaan@example.com","phone_number":null,"status":"inactive","created_at":"2025-01-06T10:00:00Z"},
+  {"customer_id":6,"full_name":"Ishita Das","email_address":"ishita@example.com","phone_number":"+91-9876500006","status":"active","created_at":"2025-01-07T10:00:00Z"},
+  {"customer_id":7,"full_name":"Rohan Kapoor","email_address":"rohan@example.com","phone_number":"+91-9876500007","status":"active","created_at":"2025-01-08T10:00:00Z"},
+  {"customer_id":8,"full_name":"Meera Nair","email_address":"meera@example.com","phone_number":null,"status":"inactive","created_at":"2025-01-09T10:00:00Z"},
+  {"customer_id":9,"full_name":"Arjun Malhotra","email_address":"arjun@example.com","phone_number":"+91-9876500009","status":"active","created_at":"2025-01-10T10:00:00Z"},
+  {"customer_id":10,"full_name":"","email_address":"empty.name@example.com","phone_number":null,"status":"active","created_at":"2025-01-11T10:00:00Z"},
+  {"customer_id":11,"full_name":"Sara Khan","email_address":"not-an-email","phone_number":"+91-9876500011","status":"active","created_at":"2025-01-12T10:00:00Z"},
+  {"customer_id":12,"full_name":"Neil Joseph","email_address":"neil@example.com","phone_number":null,"status":"blocked","created_at":"2025-01-13T10:00:00Z"},
+  {"customer_id":13,"full_name":"Tara Iyer","email_address":"tara@example.com","phone_number":"+91-9876500013","status":"active","created_at":"2025-01-14T10:00:00Z"},
+  {"customer_id":14,"full_name":"Dev Verma","email_address":"dev@example.com","phone_number":"+91-9876500014","status":"inactive","created_at":"2025-01-15T10:00:00Z"},
+  {"customer_id":15,"full_name":"Nisha Gupta","email_address":"nisha@example.com","phone_number":null,"status":"active","created_at":"2025-01-16T10:00:00Z"},
+  {"customer_id":16,"full_name":"Yash Thakur","email_address":"yash@example.com","phone_number":"+91-9876500016","status":"active","created_at":"2025-01-17T10:00:00Z"},
+  {"customer_id":17,"full_name":"Pooja Menon","email_address":"pooja@example.com","phone_number":"+91-9876500017","status":"inactive","created_at":"2025-01-18T10:00:00Z"},
+  {"customer_id":18,"full_name":"Aditya Bose","email_address":"aditya@example.com","phone_number":null,"status":"active","created_at":"2025-01-19T10:00:00Z"},
+  {"customer_id":19,"full_name":"Ira Sethi","email_address":"ira@example.com","phone_number":"+91-9876500019","status":"active","created_at":"2025-01-20T10:00:00Z"},
+  {"customer_id":20,"full_name":"Manav Bhat","email_address":"manav@example.com","phone_number":"+91-9876500020","status":"inactive","created_at":"2025-01-21T10:00:00Z"}
+]

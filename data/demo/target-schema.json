@@ -1,0 +1,11 @@
+{
+  "dataset": "customers",
+  "fields": [
+    { "name": "id", "type": "integer", "required": true },
+    { "name": "name", "type": "string", "required": true },
+    { "name": "email", "type": "string", "required": true },
+    { "name": "phone", "type": "string", "nullable": true },
+    { "name": "status", "type": "string", "required": true, "enum": ["ACTIVE", "INACTIVE"] },
+    { "name": "createdAt", "type": "datetime", "required": true }
+  ]
+}

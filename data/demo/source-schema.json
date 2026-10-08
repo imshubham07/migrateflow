@@ -1,0 +1,11 @@
+{
+  "dataset": "legacy_customers",
+  "fields": [
+    { "name": "customer_id", "type": "integer", "required": true },
+    { "name": "full_name", "type": "string", "required": true },
+    { "name": "email_address", "type": "string", "required": true },
+    { "name": "phone_number", "type": "string", "nullable": true },
+    { "name": "status", "type": "string", "required": true, "enum": ["active", "inactive", "blocked"] },
+    { "name": "created_at", "type": "datetime", "required": true }
+  ]
+}

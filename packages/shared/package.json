@@ -1,0 +1,1 @@
+{"name":"@migrateflow/shared","private":true,"scripts":{"build":"tsc","typecheck":"tsc --noEmit"}}

@@ -1,0 +1,34 @@
+import "dotenv/config";
+import cors from "cors";
+import express from "express";
+import { errorHandler } from "./middleware/error-handler.js";
+import { healthRouter } from "./routes/health.js";
+import { logger } from "./utils/logger.js";
+import { analysisRouter } from "./routes/analysis.js";
+import { approvalRouter } from "./routes/approval.js";
+import { workspaceRouter } from "./routes/workspace.js";
+import { dryRunRouter } from "./routes/dry-run.js";
+import { migrationExecutionRouter } from "./routes/migration-execution.js";
+import { reconciliationRouter } from "./routes/reconciliation.js";
+import { rollbackRouter } from "./routes/rollback.js";
+import { demoResetRouter } from "./routes/demo-reset.js";
+import { migrationsRouter } from "./routes/migrations.js";
+
+const app = express();
+const port = Number(process.env.PORT ?? 4000);
+
+app.use(cors({ origin: process.env.CORS_ORIGIN ?? "http://localhost:3000" }));
+app.use(express.json());
+app.use(healthRouter);
+app.use(analysisRouter);
+app.use(approvalRouter);
+app.use(workspaceRouter);
+app.use(dryRunRouter);
+app.use(migrationExecutionRouter);
+app.use(reconciliationRouter);
+app.use(rollbackRouter);
+app.use(demoResetRouter);
+app.use(migrationsRouter);
+app.use(errorHandler);
+
+app.listen(port, () => logger.info(`MigrateFlow API listening on port ${port}`));
